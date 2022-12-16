@@ -74,6 +74,14 @@ csvHeaders = JSON.parse(`{
   "vca_feedback": {
     "type": "string",
     "label": "vCA Feedback"
+  },
+  "createdDateTime": {
+    "type": "string",
+    "label": "Created Date"
+  },
+  "lastModifiedDateTime": {
+    "type": "string",
+    "label": "Last Modified Date"
   }
 }`);
 

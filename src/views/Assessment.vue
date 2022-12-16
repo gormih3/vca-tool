@@ -1,7 +1,19 @@
 <template>
   <div class="assessment mt-4 mb-6"
     :key="`assessment-${fullAssessment.id}`"
-    >
+    >    
+    <div class="card container custom-card" v-if="fullAssessment">    
+      <div class="card-content">
+        <div class="column is-12">
+          <h4 v-if="fullAssessment.createdDateTime"> Created: {{ fullAssessment.createdDateTime }}</h4>
+          <h4 v-else> Created: N/A</h4>
+        </div>      
+        <div class="column is-12">
+          <h4 v-if="fullAssessment.lastModifiedDateTime"> Last modification: {{ fullAssessment.lastModifiedDateTime }}</h4>
+          <h4 v-else> Last modification: N/A</h4>
+        </div>       
+      </div>
+    </div>
     <div class="card container custom-card" v-if="fullAssessment">
       <div class="card-content">
         <p class="title is-4">
