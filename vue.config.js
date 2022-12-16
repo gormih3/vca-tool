@@ -27,6 +27,10 @@ csvHeaders = JSON.parse(`{
     "type": "integer",
     "label": "proposal_id"
   },
+  "challenge_id": {
+    "type": "integer",
+    "label": "challenge_id"
+  },
   "impact_note": {
     "type": "string",
     "label": "Impact / Alignment Note"
@@ -71,9 +75,9 @@ csvHeaders = JSON.parse(`{
     "type": "boolean",
     "label": "Filtered Out"
   },
-  "vca_feedback": {
+  "vpa_feedback": {
     "type": "string",
-    "label": "vCA Feedback"
+    "label": "vPA Feedback"
   },
   "createdDateTime": {
     "type": "string",
@@ -89,9 +93,6 @@ const transformData = function (value, col) {
   if (csvHeaders[col]) {
     if (csvHeaders[col].type === 'integer') {
       return parseInt(value)
-    }
-    if (csvHeaders[col].type === 'boolean') {
-      return (value.trim() !== '')
     }
     if (csvHeaders[col].type === 'string') {
       return value
@@ -114,7 +115,7 @@ const transformHeader = function (header) {
 
 let publicPath = ''
 if (process.env.APP_ENV === 'production') {
-  publicPath = '/vca-tool/'
+  publicPath = '/vpa-tool/'
 }
 if (process.env.APP_ENV === 'staging') {
   publicPath = '/'
@@ -133,7 +134,7 @@ module.exports = {
         dynamicTyping: true,
         header: true,
         skipEmptyLines: true,
-        transform: transformData,
+        //transform: transformData,
         transformHeader: transformHeader,
       })
       .end();

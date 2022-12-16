@@ -21,7 +21,7 @@
         </p>
         <p class="subtitle is-5">{{ fullAssessment.challenge }}</p>
         <p class="subtitle is-5">
-          <strong>No. of vCAs reviews:</strong>
+          <strong>No. of vPAs reviews:</strong>
           {{ (fullAssessment.reviews) ? fullAssessment.reviews : 0 }}
         </p>
         <p class="is-6">
@@ -102,9 +102,11 @@
             </b-field>
             <b-button type="is-warning is-light" @click="uncheck()" outlined>Deselect</b-button>
             <b-field
+              :type="(!navigationAvailable) ? 'is-danger' : ''"
+              :message="(!navigationAvailable) ? 'Please fill out this field.' : ''"
+              label="Provide your rationale for filtered out OR your feedback to PA (recommended):"
               class="mt-4"
-              v-if="fullAssessment.reviewed"
-              label="Your feedback to CA (not required):">
+              v-if="fullAssessment.reviewed">
               <b-input
                 type="textarea"
                 @keydown.native="saveStatus = 'Saving...'"
@@ -119,7 +121,7 @@
       <footer class="card-footer custom-footer">
         <router-link class="card-footer-item"
           :to="{ name: 'conditions' }">
-          Overview
+          Assessments list / Overview
         </router-link>
         <a @click="getNext" class="card-footer-item">
           Next
@@ -152,6 +154,22 @@ export default {
     fullAssessment() {
       return this.getFullById(this.$route.params.id)
     },
+    rationaleRequired() {
+      return this.review === 'filtered_out'
+    },
+    navigationAvailable() {
+      /*
+      if (this.review === 'filtered_out') {
+        if (this.debouncedRationale) {
+          if (this.debouncedRationale.length > 0) {
+            return true
+          }
+        }
+        return false
+      }
+      */
+      return true
+    },
     review: {
       get() {
         if (this.assessment.excellent) return 'excellent';
@@ -168,7 +186,7 @@ export default {
     },
     debouncedRationale: {
       get() {
-        return this.assessment.vca_feedback;
+        return this.assessment.vpa_feedback;
       },
       set: debounce(function(val) {
         this.$store.commit('assessments/setVcaFeedback', {
